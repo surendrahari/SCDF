@@ -1,0 +1,36 @@
+#https://stackoverflow.com/questions/43216410/howto-set-routing-key-for-producer:
+spring:
+  application:
+    name: mySource
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: source
+          group: sourceQueue
+        output:
+          destination: output
+          producer:
+            requiredGroup: outputQueue
+#            bindingRoutingKey: org
+            routing-key-expression: 'org'
+        ack:
+          destination: output
+          producer:
+            requiredGroup: ackQueue
+#            bindingRoutingKey: ack
+            routing-key-expression: 'ack'
+
+#spring:
+#  application:
+#    name: mySink
+#  cloud:
+#    stream:
+#      bindings:
+#        input:
+#          destination: output
+#          group: outputQueue
+#        output:
+#          destination: source
+#          producer:
+#            requiredGroup: outputQueue

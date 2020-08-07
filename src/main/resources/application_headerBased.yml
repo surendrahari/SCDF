@@ -1,0 +1,14 @@
+#https://stackoverflow.com/questions/43216410/howto-set-routing-key-for-producer:
+spring:
+  application:
+    name: mySource_headerbased
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: source
+          group: sourceQueue
+        output:
+          destination: output
+          producer:
+            requiredGroup: outputQueue

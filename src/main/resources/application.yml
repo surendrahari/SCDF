@@ -1,0 +1,14 @@
+#https://github.com/spring-cloud/spring-cloud-stream-samples/blob/master/multi-binder-samples/multi-binder-dynamic-destinations/src/main/resources/application.yml
+spring:
+  application:
+    name: myCustomSource
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: source
+          group: sourceQueue
+        output:
+          destination: output
+          producer:
+            requiredGroup: processQueue

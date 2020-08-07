@@ -1,0 +1,30 @@
+#https://github.com/spring-cloud/spring-cloud-stream-samples/blob/master/multi-binder-samples/multi-binder-dynamic-destinations/src/main/resources/application.yml
+#spring.cloud.stream:
+#  function.definition: supplier;receive1;receive2;
+#  bindings:
+#    receive1-in-0.destination: customerId-1
+#    receive2-in-0.destination: customerId-2
+spring:
+  application:
+    name: mySource_headerbased
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: source
+          group: sourceQueue
+        output:
+          destination: output
+          producer:
+            #payload string length - 1 is the partition where it will get stored
+            partition-key-expression: headers['partitionKey'] - 1
+            partition-count: 4
+#            requiredGroup: outputQueue
+            required-groups: myGroup #only applicable for rabbit
+
+# following properties doesn't tested
+#      rabbit:
+#        bindings:
+#          output:
+#            producer:
+#              autoBindDlq: true
